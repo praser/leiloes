@@ -30,7 +30,7 @@ const parseHtml = (html: string): cheerio.CheerioAPI => cheerio.load(html)
 const run = async () => {
   const html: string = await getIndexHtml()
   const $: cheerio.CheerioAPI = parseHtml(html)
-  const links: any[] = []
+  const auctions: any[] = []
   $(".boxLeiloes").each((i, boxLeilao) => {
     const el = $(boxLeilao)
     const seq = extractSeq(el.attr("href"))
@@ -46,7 +46,7 @@ const run = async () => {
     const type = convertType(extractType(el))
     const url = mountUrl(seq)
 
-    links.push({
+    auctions.push({
       description,
       firstCall,
       lastCall,
@@ -58,7 +58,7 @@ const run = async () => {
     })
   })
 
-  return links
+  return auctions
 }
 
 ;(async () => {
