@@ -28,10 +28,14 @@ export type AuctionSite = {
 }
 
 export type AuctionLot = {
-  id: string
-  auctionSiteId: string
-  url: string
-  status: AuctionLotStatus
+  // id: string
+  // auctionSiteId: string
+  description: string
+  firstCall: Date
+  lastCall: Date
   modality: AuctionModality
+  sponsor: string
+  status: AuctionLotStatus
   type: AuctionType
+  url: string
 }

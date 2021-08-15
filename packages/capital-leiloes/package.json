@@ -1,16 +1,18 @@
 {
-  "name": "capital-leiloes",
+  "name": "@auctions/capital-leiloes",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "@auctions/auction-core": "1.0.0",
     "cheerio": "^1.0.0-rc.10",
-    "core": "1.0.0",
+    "date-fns": "^2.23.0",
     "dotenv-safe": "^8.2.0",
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
+    "@types/date-fns": "^2.6.0",
     "@types/dotenv-safe": "^8.1.2",
     "@types/jest": "^27.0.1",
     "@types/node": "^16.6.1",
