@@ -1,6 +1,6 @@
 import * as dotenv from "dotenv-safe"
 import fetch, { Response } from "node-fetch"
-import * as cheerio from "cheerio"
+import { CheerioAPI, load } from "cheerio"
 import { isValid } from "date-fns"
 
 import { convertModality, convertStatus, convertType } from "./conversors"
@@ -15,6 +15,7 @@ import {
   extractType,
 } from "./extractors"
 import { mountUrl } from "./mounters"
+import { Auction } from "@auctions/auction-core"
 
 dotenv.config()
 
@@ -25,12 +26,12 @@ const getIndexHtml = async (): Promise<string> => {
   return html
 }
 
-const parseHtml = (html: string): cheerio.CheerioAPI => cheerio.load(html)
+const loadHtml = (html: string): CheerioAPI => load(html)
 
 const run = async () => {
   const html: string = await getIndexHtml()
-  const $: cheerio.CheerioAPI = parseHtml(html)
-  const auctions: any[] = []
+  const $: CheerioAPI = loadHtml(html)
+  const auctions: Auction[] = []
   $(".boxLeiloes").each((i, boxLeilao) => {
     const el = $(boxLeilao)
     const seq = extractSeq(el.attr("href"))

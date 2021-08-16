@@ -1,33 +1,36 @@
-export const convertModality = (modality: string) => {
-  // switch (modality.toUpperCase()) {
-  //   case "ONLINE":
-  //     return AuctionModality.Online
-  //   default:
-  //     return AuctionModality.InPerson
-  // }
-  return modality
+import {
+  AuctionModality,
+  AuctionStatus,
+  AuctionType,
+} from "@auctions/auction-core"
+
+export const convertModality = (modality: string): AuctionModality => {
+  switch (modality.toUpperCase()) {
+    case "ONLINE":
+      return AuctionModality.Online
+    default:
+      return AuctionModality.InPerson
+  }
 }
 
-export const convertStatus = (status: string) => {
-  // switch (status.toUpperCase()) {
-  //   case "ABERTO PARA LANCES":
-  //     return AuctionLotStatus.OpenToBid
-  //   case "SUSPENSO":
-  //     return AuctionLotStatus.Suspended
-  //   case "ENCERRADO":
-  //     return AuctionLotStatus.Closed
-  //   default:
-  //     return AuctionLotStatus.Foreseen
-  // }
-  return status
+export const convertStatus = (status: string): AuctionStatus => {
+  switch (status.toUpperCase()) {
+    case "ABERTO PARA LANCES":
+      return AuctionStatus.OpenToBid
+    case "SUSPENSO":
+      return AuctionStatus.Suspended
+    case "ENCERRADO":
+      return AuctionStatus.Closed
+    default:
+      return AuctionStatus.Foreseen
+  }
 }
 
-export const convertType = (type: string) => {
-  // switch (type.toUpperCase()) {
-  //   case "Judicial":
-  //     return AuctionType.Judicial
-  //   default:
-  //     return AuctionType.Extrajudicial
-  // }
-  return type
+export const convertType = (type: string): AuctionType => {
+  switch (type.toUpperCase()) {
+    case "Judicial":
+      return AuctionType.Judicial
+    default:
+      return AuctionType.Extrajudicial
+  }
 }
