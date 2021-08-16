@@ -28,7 +28,7 @@ export const convertStatus = (status: string): AuctionStatus => {
 
 export const convertType = (type: string): AuctionType => {
   switch (type.toUpperCase()) {
-    case "Judicial":
+    case "JUDICIAL":
       return AuctionType.Judicial
     default:
       return AuctionType.Extrajudicial
