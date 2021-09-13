@@ -2,9 +2,7 @@ import fs from 'fs'
 import { promisify } from 'util'
 import { describe, expect, it } from '@jest/globals'
 import { CheerioAPI, load } from "cheerio"
-import { extractDescription, extractFirstCall, extractLastCall, extractModality, extractSeq, extractSponsor, extractStatus, extractType, parseDate } from './extractors'
-import faker from "faker"
-import { format } from 'date-fns'
+import { extractDescription, extractFirstCall, extractLastCall, extractModality, extractSeq, extractSponsor, extractStatus, extractType } from './extractors'
 const readFile = promisify(fs.readFile)
 
 describe('Auction extractors', () => {
@@ -189,12 +187,3 @@ describe('Auction extractors', () => {
   })
 })
 
-describe('Parsers', () => {
-  describe('parseDate', () => {
-    it('is expected to parse dates strings to Date', () => {
-      const date = format(faker.date.past(), 'dd/MM/yyyy HH:mm')
-      const sut = parseDate(date)
-      expect(sut).toBeInstanceOf(Date)
-    })
-  })
-})

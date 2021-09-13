@@ -1,4 +1,4 @@
-import { parse } from "date-fns"
+import { parseDate } from "./utils"
 
 export const extractDescription = (el: any): string => {
   const selector: string = ".descricao"
@@ -41,13 +41,4 @@ export const extractStatus = (el: any): string => {
 export const extractType = (el: any): string => {
   const selector: string = ".bordaBase img"
   return el.find(selector).hasClass("jud") ? "Judicial" : "Extra Judicial"
-}
-
-export const parseDate = (text: string): Date => {
-  const dateRegex = /(\d{2}\/){2}\d{4}/
-  const timeRegex = /\d{2}:\d{2}/
-  const date = dateRegex.exec(text) || []
-  const time = timeRegex.exec(text) || []
-
-  return parse(`${date[0]} ${time[0]}`, "dd/MM/yyyy HH:mm", new Date())
 }

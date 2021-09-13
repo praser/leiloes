@@ -14,7 +14,7 @@ import {
   extractStatus,
   extractType,
 } from "./extractors"
-import { mountUrl } from "./mounters"
+import { mountUrl } from "./utils"
 import { Auction } from "@auctions/auction-core"
 
 dotenv.config()
