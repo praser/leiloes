@@ -1,4 +1,5 @@
 import fs from 'fs'
+import path from 'path'
 import { promisify } from 'util'
 import { describe, expect, it } from '@jest/globals'
 import { CheerioAPI, load } from "cheerio"
@@ -11,7 +12,7 @@ describe('Auction extractors', () => {
 
   beforeAll(async () => {
     try {
-      const fileBuffer = await readFile(`${__dirname}/fixture.html`)
+      const fileBuffer = await readFile(path.join(__dirname, 'fixture.html'))
       const fixture = fileBuffer.toString()
       const loadHtml = (html: string): CheerioAPI => load(fixture)
       $ = loadHtml(fixture)
@@ -47,41 +48,15 @@ describe('Auction extractors', () => {
   })
 
   describe('First call', () => {
-    let sut: any
-
-    beforeEach(() => {
-      sut = extractFirstCall(el)
-    })
-
-    it('is expected to not be null', () => {
-      expect(sut).not.toBeNull()
-    })
-
-    it('is expected to not be undefined', () => {
-      expect(sut).not.toBeUndefined()
-    })
-
     it('expected to be a date', () => {
+      const sut = extractFirstCall(el)
       expect(sut).toBeInstanceOf(Date)
     })
   })
 
   describe('Last call', () => {
-    let sut: any
-
-    beforeEach(() => {
-      sut = extractLastCall(el)
-    })
-
-    it('is expected to not be null', () => {
-      expect(sut).not.toBeNull()
-    })
-
-    it('is expected to not be undefined', () => {
-      expect(sut).not.toBeUndefined()
-    })
-
     it('expected to be a date', () => {
+      const sut = extractLastCall(el)
       expect(sut).toBeInstanceOf(Date)
     })
   })

@@ -34,7 +34,7 @@ const run = async () => {
   const auctions: Auction[] = []
   $(".boxLeiloes").each((i, boxLeilao) => {
     const el = $(boxLeilao)
-    const seq = extractSeq(el.attr("href"))
+    const seq = extractSeq(el.attr("href") || '0')
 
     const description = extractDescription(el)
     const firstCall = extractFirstCall(el)
@@ -45,7 +45,7 @@ const run = async () => {
     const sponsor = extractSponsor(el)
     const status = convertStatus(extractStatus(el))
     const type = convertType(extractType(el))
-    const url = mountUrl(seq)
+    const url = mountUrl(seq, process.env.AUCTION_SITE_URL || '')
 
     auctions.push({
       description,
