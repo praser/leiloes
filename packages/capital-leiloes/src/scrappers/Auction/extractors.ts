@@ -22,7 +22,7 @@ export const extractModality = (el: any): string => {
   return el.find(selector).text().split("\n\t\t\t\t\t\t\t\t")[0]
 }
 
-export const extractSeq = (href: string = "") => parseInt(href.split("seq=")[1])
+export const extractSeq = (href: string) => parseInt(href.split("seq=")[1])
 
 export const extractSponsor = (el: any): string => {
   const selector: string = "h1"
@@ -43,7 +43,7 @@ export const extractType = (el: any): string => {
   return el.find(selector).hasClass("jud") ? "Judicial" : "Extra Judicial"
 }
 
-const parseDate = (text: string): Date => {
+export const parseDate = (text: string): Date => {
   const dateRegex = /(\d{2}\/){2}\d{4}/
   const timeRegex = /\d{2}:\d{2}/
   const date = dateRegex.exec(text) || []
