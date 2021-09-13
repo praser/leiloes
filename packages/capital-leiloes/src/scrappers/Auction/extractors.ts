@@ -1,4 +1,4 @@
-import { parseDate } from "./utils"
+import { findDates, findTimes, hasSecondCall, parseDate } from "./utils"
 
 export const extractDescription = (el: any): string => {
   const selector: string = ".descricao"
@@ -8,13 +8,26 @@ export const extractDescription = (el: any): string => {
 export const extractFirstCall = (el: any): Date => {
   const selector: string = ".descricao"
   const text = el.find(selector).text()
-  return parseDate(text)
+  const dates = findDates(text)
+  const times = findTimes(text)
+
+  if (!dates || !times) throw Error('First call not found')
+  
+  return parseDate(dates[0], times[0])
 }
 
-export const extractLastCall = (el: any): Date => {
+export const extractLastCall = (el: any): Date | undefined => {
   const selector: string = ".descricao"
-  const text = el.find(selector).text().split("2ª Data")[1]
-  return parseDate(text)
+  const text = el.find(selector).text()
+
+  if (!hasSecondCall(text)) return undefined
+
+  const dates = findDates(text)
+  const times = findTimes(text)
+
+  if (!dates || !times) throw Error('Second call not found')
+
+  return parseDate(dates[1], times[1])
 }
 
 export const extractModality = (el: any): string => {

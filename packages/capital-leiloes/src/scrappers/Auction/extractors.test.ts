@@ -4,6 +4,10 @@ import { promisify } from 'util'
 import { describe, expect, it } from '@jest/globals'
 import { CheerioAPI, load } from "cheerio"
 import { extractDescription, extractFirstCall, extractLastCall, extractModality, extractSeq, extractSponsor, extractStatus, extractType } from './extractors'
+import faker from 'faker'
+import { format } from 'date-fns/fp'
+import * as utils from './utils'
+
 const readFile = promisify(fs.readFile)
 
 describe('Auction extractors', () => {
@@ -23,8 +27,11 @@ describe('Auction extractors', () => {
 
   beforeEach(() => {
     const items = $(".boxLeiloes")
-    const i = Math.floor(Math.random()*items.length)
-    el = $(items[i])
+    el = $(items[0])
+  })
+
+  beforeEach(() => {
+    jest.clearAllMocks()
   })
 
   describe('Description', () => {
@@ -48,16 +55,92 @@ describe('Auction extractors', () => {
   })
 
   describe('First call', () => {
-    it('expected to be a date', () => {
-      const sut = extractFirstCall(el)
-      expect(sut).toBeInstanceOf(Date)
+    it('is expected to call findDates once', () => {
+      const spy = jest.spyOn(utils, 'findDates')
+      extractFirstCall(el)
+      expect(spy).toHaveBeenCalledTimes(1)
+    })
+
+    it('is expected to call findTimes once', () => {
+      const spy = jest.spyOn(utils, 'findTimes')
+      extractFirstCall(el)
+      expect(spy).toHaveBeenCalledTimes(1)
+    })
+
+    it ('is expected to throw when findDates return null', () => {
+      jest.spyOn(utils, 'findDates').mockImplementationOnce(() => null)
+      expect(() => {
+        extractFirstCall(el)
+      }).toThrow('First call not found')
+    })
+
+    it ('is expected to throw when findTimes return null', () => {
+      jest.spyOn(utils, 'findTimes').mockImplementationOnce(() => null)
+      expect(() => {
+        extractFirstCall(el)
+      }).toThrow('First call not found')
+    })
+
+    it('is expected to call parseDate once', () => {
+      const spy = jest.spyOn(utils, 'parseDate')
+      extractFirstCall(el)
+      expect(spy).toHaveBeenCalledTimes(1)
     })
   })
 
   describe('Last call', () => {
-    it('expected to be a date', () => {
-      const sut = extractLastCall(el)
-      expect(sut).toBeInstanceOf(Date)
+    it('it is expected to call hasSecondCall once', () => {
+      const spy = jest.spyOn(utils, 'hasSecondCall')
+      extractLastCall(el)
+      expect(spy).toBeCalledTimes(1)
+    })
+
+    describe('when it has a second call', () => {
+      beforeEach(() => {
+        jest
+          .spyOn(utils, 'hasSecondCall')
+          .mockImplementation(() => true)
+      })
+
+      it('is expected to call findDates once', () => {
+        const spy = jest.spyOn(utils, 'findDates')
+        extractLastCall(el)
+        expect(spy).toBeCalledTimes(1)
+      })
+
+      it ('is expected to throw when findDates return null', () => {
+        jest.spyOn(utils, 'findDates').mockImplementationOnce(() => null)
+        expect(() => {
+          extractLastCall(el)
+        }).toThrow('Second call not found')
+      })
+
+      it ('is expected to throw when findTimes return null', () => {
+        jest.spyOn(utils, 'findTimes').mockImplementationOnce(() => null)
+        expect(() => {
+          extractLastCall(el)
+        }).toThrow('Second call not found')
+      })
+
+      it('is expected to call findTimes once', () => {
+        const spy = jest.spyOn(utils, 'findTimes')
+        extractLastCall(el)
+        expect(spy).toBeCalledTimes(1)
+      })
+
+      it('is expected to call parseDate once', () => {
+        const spy = jest.spyOn(utils, 'parseDate')
+        extractLastCall(el)
+        expect(spy).toBeCalledTimes(1)
+      })
+    })
+
+    describe('when it does not have a second call', () => {
+      it('expected to be undefined', () => {
+        jest.spyOn(utils, 'hasSecondCall').mockImplementationOnce(() => false)
+        const sut = extractLastCall(el)
+        expect(sut).toBeUndefined()
+      })
     })
   })
 
