@@ -4,6 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
   "dependencies": {
     "@auctions/auction-core": "1.0.0",
     "cheerio": "^1.0.0-rc.10",
