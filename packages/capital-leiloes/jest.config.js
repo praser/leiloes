@@ -4,4 +4,6 @@ module.exports = {
   testEnvironment: "node",
   globalSetup: "./scripts/jestGlobalSetup.ts",
   globalTeardown: "./scripts/jestGlobalTeardown.ts",
+  collectCoverage: true,
+  coverageReporters: ["lcov"],
 }
