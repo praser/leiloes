@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+  - '14.17.4'
+notifications:
+  email: true
+branches:
+  only:
+    - develop
+script:
+  - yarn build
+  - yarn test
+matrix:
+  include:
+    - env: TARGET=packages/auction-core
+    - env: TARGET=packages/capital-leiloes
