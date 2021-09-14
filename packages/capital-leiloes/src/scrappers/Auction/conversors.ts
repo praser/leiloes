@@ -4,14 +4,10 @@ import {
   AuctionType,
 } from "@auctions/auction-core"
 
-export const convertModality = (modality: string): AuctionModality => {
-  switch (modality.toUpperCase()) {
-    case "ONLINE":
-      return AuctionModality.Online
-    default:
-      return AuctionModality.InPerson
-  }
-}
+export const convertModality = (modality: string): AuctionModality =>
+  modality.toUpperCase() === "ONLINE"
+    ? AuctionModality.Online
+    : AuctionModality.InPerson
 
 export const convertStatus = (status: string): AuctionStatus => {
   switch (status.toUpperCase()) {
@@ -26,11 +22,7 @@ export const convertStatus = (status: string): AuctionStatus => {
   }
 }
 
-export const convertType = (type: string): AuctionType => {
-  switch (type.toUpperCase()) {
-    case "JUDICIAL":
-      return AuctionType.Judicial
-    default:
-      return AuctionType.Extrajudicial
-  }
-}
+export const convertType = (type: string): AuctionType =>
+  type.toUpperCase() === "JUDICIAL"
+    ? AuctionType.Judicial
+    : AuctionType.Extrajudicial
