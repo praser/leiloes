@@ -11,5 +11,4 @@ before_install:
 install:
   - yarn --silent
 script:
-  - yarn workspaces run build
   - yarn workspaces run test
