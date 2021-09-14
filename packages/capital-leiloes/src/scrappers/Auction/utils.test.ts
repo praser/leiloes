@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@jest/globals';
-import { findDates, findTimes, hasSecondCall, mountUrl, parseDate } from "./utils";
+import { hasSecondCall, mountUrl, parseDate } from "./utils";
 import faker from "faker";
 import { format } from 'date-fns';
 
@@ -30,26 +30,6 @@ describe('Utils', () => {
 
     it('is expectect to have correct basepath', () => {
       expect(sut.origin).toBe(origin)
-    })
-  })
-
-  describe('find dates', () => {
-    it('is expected to find two dates if there is two dates in the text', () =>{
-      const firstDate = format(faker.date.past(), 'dd/MM/yyyy HH:mm')
-      const lastDate = format(faker.date.past(), 'dd/MM/yyyy HH:mm')
-      const text = `${faker.lorem.sentence()} ${firstDate} ${faker.lorem.sentence()} ${lastDate}`
-      const sut = findDates(text)
-      expect(sut).toHaveLength(2)
-    })
-  })
-
-  describe('find times', () => {
-    it('is expected to find two times if there is two times in the text', () =>{
-      const firstDate = format(faker.date.past(), 'dd/MM/yyyy HH:mm')
-      const lastDate = format(faker.date.past(), 'dd/MM/yyyy HH:mm')
-      const text = `${faker.lorem.sentence()} ${firstDate} ${faker.lorem.sentence()} ${lastDate}`
-      const sut = findTimes(text)
-      expect(sut).toHaveLength(2)
     })
   })
 
