@@ -9,6 +9,11 @@ export const convertModality = (modality: string): AuctionModality =>
     ? AuctionModality.Online
     : AuctionModality.InPerson
 
+export const convertType = (type: string): AuctionType =>
+  type.toUpperCase() === "JUDICIAL"
+    ? AuctionType.Judicial
+    : AuctionType.Extrajudicial
+
 export const convertStatus = (status: string): AuctionStatus => {
   switch (status.toUpperCase()) {
     case "ABERTO PARA LANCES":
@@ -21,8 +26,3 @@ export const convertStatus = (status: string): AuctionStatus => {
       return AuctionStatus.Foreseen
   }
 }
-
-export const convertType = (type: string): AuctionType =>
-  type.toUpperCase() === "JUDICIAL"
-    ? AuctionType.Judicial
-    : AuctionType.Extrajudicial
