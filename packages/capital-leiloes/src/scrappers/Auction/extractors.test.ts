@@ -4,8 +4,6 @@ import { promisify } from 'util'
 import { describe, expect, it } from '@jest/globals'
 import { CheerioAPI, load } from "cheerio"
 import { extractDescription, extractFirstCall, extractLastCall, extractModality, extractSeq, extractSponsor, extractStatus, extractType } from './extractors'
-import faker from 'faker'
-import { format } from 'date-fns/fp'
 import * as utils from './utils'
 
 const readFile = promisify(fs.readFile)

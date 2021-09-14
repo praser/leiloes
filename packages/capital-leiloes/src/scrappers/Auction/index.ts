@@ -1,6 +1,6 @@
 import * as dotenv from "dotenv-safe"
 import fetch, { Response } from "node-fetch"
-import { CheerioAPI, load } from "cheerio"
+import { Cheerio, CheerioAPI, load } from "cheerio"
 import { isValid } from "date-fns"
 
 import { convertModality, convertStatus, convertType } from "./conversors"
@@ -28,35 +28,28 @@ const getIndexHtml = async (): Promise<string> => {
 
 const loadHtml = (html: string): CheerioAPI => load(html)
 
+const extractAuction = (el: any, seq: number): Auction => {
+  return {
+    description: extractDescription(el),
+    firstCall: extractFirstCall(el),
+    lastCall: extractLastCall(el),
+    modality: convertModality(extractModality(el)),
+    sponsor: extractSponsor(el),
+    status: convertStatus(extractStatus(el)),
+    type: convertType(extractType(el)),
+    url: mountUrl(seq, process.env.AUCTION_SITE_URL || '')
+  }
+}
+
 const run = async () => {
   const html: string = await getIndexHtml()
   const $: CheerioAPI = loadHtml(html)
   const auctions: Auction[] = []
+  
   $(".boxLeiloes").each((i, boxLeilao) => {
     const el = $(boxLeilao)
     const seq = extractSeq(el.attr("href") || '0')
-
-    const description = extractDescription(el)
-    const firstCall = extractFirstCall(el)
-    const lastCall = isValid(extractLastCall(el))
-      ? extractLastCall(el)
-      : undefined
-    const modality = convertModality(extractModality(el))
-    const sponsor = extractSponsor(el)
-    const status = convertStatus(extractStatus(el))
-    const type = convertType(extractType(el))
-    const url = mountUrl(seq, process.env.AUCTION_SITE_URL || '')
-
-    auctions.push({
-      description,
-      firstCall,
-      lastCall,
-      modality,
-      sponsor,
-      status,
-      type,
-      url,
-    })
+    auctions.push(extractAuction(el, seq))
   })
 
   return auctions
